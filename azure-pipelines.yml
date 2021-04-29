@@ -8,6 +8,8 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
+variables:
+  - group: PinelineTest-Variables
 strategy:
   matrix:
     Python27:
@@ -26,11 +28,9 @@ steps:
   displayName: 'Use Python $(python.version)'
 
 - script: |
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-  displayName: 'Install dependencies'
+    $(newmanScript)
+  displayName: 'Install Newman'
 
 - script: |
-    pip install pytest pytest-azurepipelines
-    pytest
-  displayName: 'pytest'
+    $(runTest)
+  displayName: 'Run Tests'
