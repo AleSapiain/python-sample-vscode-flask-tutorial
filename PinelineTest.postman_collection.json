@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "c25196e5-f0b3-4c98-a18f-78cd7a203bbc",
+		"name": "PinelineTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "NYTimes-GetComments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const schema = {\"type\" : \"string\"}\r",
+							"\r",
+							"pm.test(\"List of Comments is OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Json Structure Test\", function () {\r",
+							"    pm.response.to.not.have.body(schema);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response Time is Optime\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{NYT-baseURL}}/user-content/url.json?api-key={{NYT-apiKey}}&url={{NYT-url}}",
+					"host": [
+						"{{NYT-baseURL}}"
+					],
+					"path": [
+						"user-content",
+						"url.json"
+					],
+					"query": [
+						{
+							"key": "api-key",
+							"value": "{{NYT-apiKey}}"
+						},
+						{
+							"key": "url",
+							"value": "{{NYT-url}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NYTimes-GetRepliesComment",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const schema = {\"type\" : \"string\"}\r",
+							"\r",
+							"pm.test(\"List of Comments is OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Json Structure Test\", function () {\r",
+							"    pm.response.to.not.have.body(schema);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response Time is Optime\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(700);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{NYT-baseURL}}/user-content/replies.json?api-key={{NYT-apiKey}}&url={{NYT-url}}&commentSequence={{comment_id}}",
+					"host": [
+						"{{NYT-baseURL}}"
+					],
+					"path": [
+						"user-content",
+						"replies.json"
+					],
+					"query": [
+						{
+							"key": "api-key",
+							"value": "{{NYT-apiKey}}"
+						},
+						{
+							"key": "url",
+							"value": "{{NYT-url}}"
+						},
+						{
+							"key": "commentSequence",
+							"value": "{{comment_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "comment_id",
+			"value": "101073483"
+		}
+	]
+}
